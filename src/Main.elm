@@ -1,15 +1,8 @@
 module Main exposing (init, main, update, view)
 
 import Browser
-import Collage exposing (..)
-import Collage.Events as CollageEvents
-import Collage.Layout as CollageLayout
 import Collage.Render as CollageRender
-import Collage.Text as CollageText
-import Color exposing (..)
 import Draw exposing (draw)
-import Graph
-import Point2d exposing (Point2d)
 import SampleData exposing (sampleData)
 import Types exposing (..)
 
