@@ -13,10 +13,8 @@ import SampleData exposing (sampleData)
 import Types exposing (..)
 
 
-type alias Model =
-    { graph : Graph
-    , hoveringId : Maybe Graph.NodeId
-    }
+
+-- MAIN
 
 
 main : Program () Model Msg
@@ -29,12 +27,47 @@ main =
         }
 
 
+
+-- MODEL
+
+
+type alias Model =
+    { graph : Graph
+    , hoveringId : Maybe Graph.NodeId
+    }
+
+
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( { graph = sampleData, hoveringId = Nothing }, Cmd.none )
+
+
+
+-- UPDATE
+
+
 type Msg
     = Hover { enter : Bool, id : Graph.NodeId }
 
 
-init _ =
-    ( { graph = sampleData, hoveringId = Nothing }, Cmd.none )
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        Hover { enter, id } ->
+            ( { model
+                | hoveringId =
+                    if enter then
+                        Just id
+
+                    else
+                        Nothing
+              }
+            , Cmd.none
+            )
+
+
+
+-- VIEW
 
 
 view : Model -> Browser.Document Msg
@@ -77,10 +110,6 @@ drawEdge model { from, to, label } =
 
         _ ->
             group []
-
-
-
--- sometihing with line
 
 
 drawNode : Model -> Graph.Node NodeLabel -> Collage Msg
@@ -134,19 +163,3 @@ drawPolitician { party } =
     in
     circle 10.0
         |> filled (uniform color)
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        Hover { enter, id } ->
-            ( { model
-                | hoveringId =
-                    if enter then
-                        Just id
-
-                    else
-                        Nothing
-              }
-            , Cmd.none
-            )
