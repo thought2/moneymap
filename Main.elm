@@ -8,7 +8,6 @@ import Color exposing (..)
 import Graph
 import Point2d exposing (Point2d)
 
-
 type alias Graph =
     Graph.Graph Node Edge
 
