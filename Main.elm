@@ -87,17 +87,17 @@ sampleData =
             , Graph.Node 5
                 { name = "John Barrasso"
                 , entity = Politician { party = Republican, organ = Senate }
-                , position = Point2d.origin
+                , position = Point2d.fromCoordinates ( 39.0, 800.0 )
                 }
             , Graph.Node 5
                 { name = "John Barrasso"
                 , entity = Politician { party = Republican, organ = Senate }
-                , position = Point2d.origin
+                , position = Point2d.fromCoordinates ( 391.0, 589.0 )
                 }
             , Graph.Node 6
                 { name = "Collin Peterson"
                 , entity = Politician { party = Democrat, organ = House }
-                , position = Point2d.origin
+                , position = Point2d.fromCoordinates ( 78.0, 256.0 )
                 }
             , Graph.Node 7
                 { name = "Henry Cuellar"
@@ -107,17 +107,17 @@ sampleData =
             , Graph.Node 8
                 { name = "Cindy Hyde-Smith"
                 , entity = Politician { party = Republican, organ = Senate }
-                , position = Point2d.origin
+                , position = Point2d.fromCoordinates ( 129.0, 950.0 )
                 }
             , Graph.Node 9
                 { name = "Luther Strange"
                 , entity = Politician { party = Republican, organ = Senate }
-                , position = Point2d.origin
+                , position = Point2d.fromCoordinates ( 9.0, 1000.0 )
                 }
             , Graph.Node 10
                 { name = "Deb Fischer"
                 , entity = Politician { party = Republican, organ = Senate }
-                , position = Point2d.origin
+                , position = Point2d.fromCoordinates (470.0, 10.0 )
                 }
             ]
 
