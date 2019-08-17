@@ -1,13 +1,15 @@
 module Draw exposing (draw, drawEdge, drawNode, drawPolitician)
 
+import App.Types exposing (Model, Msg(..))
 import Collage exposing (..)
 import Collage.Events exposing (..)
 import Collage.Layout exposing (..)
 import Collage.Text as CollageText
 import Color exposing (..)
+import CommonTypes exposing (Entity(..), Party(..), PoliticianData)
 import Graph
+import MoneyGraph exposing (EdgeLabel, NodeLabel)
 import Point2d
-import Types exposing (EdgeLabel, Entity(..), Model, Msg(..), NodeLabel, Party(..), PoliticianData)
 
 
 draw : Model -> Collage Msg

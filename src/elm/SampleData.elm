@@ -1,11 +1,12 @@
 module SampleData exposing (sampleData)
 
+import CommonTypes exposing (..)
 import Graph
+import MoneyGraph exposing (MoneyGraph)
 import Point2d
-import Types exposing (..)
 
 
-sampleData : Graph
+sampleData : MoneyGraph
 sampleData =
     let
         nodes =

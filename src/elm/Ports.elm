@@ -1,6 +1,6 @@
 port module Ports exposing (getLayout, setLayout)
 
-import Types exposing (GraphLayout)
+import MoneyGraph exposing (GraphLayout)
 
 
 port setLayout : () {- GraphLayout -} -> Cmd msg
