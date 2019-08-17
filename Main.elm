@@ -176,6 +176,7 @@ view model =
   }
 
 
+
 nodeCircle : (Graph.Node Node) -> Svg Msg 
 nodeCircle {label} =
   circle [ cx <| (String.fromFloat (Point2d.xCoordinate label.position))
