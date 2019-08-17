@@ -1,7 +1,17 @@
-module Types exposing (EdgeLabel, Entity(..), Graph, NodeLabel, Organ(..), Party(..), PoliticianData)
+module Types exposing (EdgeLabel, Entity(..), Graph, Model, Msg(..), NodeLabel, Organ(..), Party(..), PoliticianData)
 
 import Graph
 import Point2d exposing (Point2d)
+
+
+type alias Model =
+    { graph : Graph
+    , hoveringId : Maybe Graph.NodeId
+    }
+
+
+type Msg
+    = Hover { enter : Bool, id : Graph.NodeId }
 
 
 type Party
