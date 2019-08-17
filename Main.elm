@@ -1,10 +1,10 @@
-import Html exposing (text, div, pre)
 import Browser
 import Graph
 import Point2d exposing (Point2d)
-import Collage exposing (circle, rectangle, filled, uniform)
-import Collage.Layout exposing (at, topLeft)
-import Collage.Render exposing (svg)
+import Color
+import Svg exposing (..)
+import Svg.Attributes exposing (..)
+
 
 type alias Graph = Graph.Graph Node Edge
 
@@ -42,27 +42,27 @@ sampleData =
       [ Graph.Node 0 
         { name = "NRA"
         , entity = Company
-        , position = Point2d.origin
+        , position = Point2d.fromCoordinates (150.0, 200.0)
         }
       , Graph.Node 1 
         { name = "Marsha Blackburn"
         , entity = Politician {party = Republican, organ = House} 
-        , position = Point2d.origin
+        , position = Point2d.fromCoordinates (450.0, 143.0)
         }
         , Graph.Node 2 
         { name = "Ted Cruz"
         , entity = Politician {party = Republican, organ = Senate} 
-        , position = Point2d.origin
+        , position = Point2d.fromCoordinates (30.0, 812.0)
         }
          , Graph.Node 3 
         { name = "Dean Heller"
         , entity = Politician {party = Republican, organ = Senate} 
-        , position = Point2d.origin
+        , position = Point2d.fromCoordinates (601.0, 82.0)
         }
           , Graph.Node 4 
         { name = "Roger Wicker"
         , entity = Politician {party = Republican, organ = Senate} 
-        , position = Point2d.origin
+        , position = Point2d.fromCoordinates (621.0, 23.0)
         }
           , Graph.Node 5 
         { name = "John Barrasso"
@@ -137,11 +137,22 @@ view : Model -> Browser.Document Msg
 view model = 
   { title = "MoneyMap"
   , body =  
-    [ 
-      pre [] [text (Debug.toString model)] 
+    [ svg
+        [ width "1500"
+        , height "1500"
+        , viewBox "0 0 1500 1500"
+        ]
+        (List.map nodeCircle (Graph.nodes model))
     ]
   }
 
+
+nodeCircle : (Graph.Node Node) -> Svg Msg 
+nodeCircle {label} =
+  circle [ cx <| (String.fromFloat (Point2d.xCoordinate label.position))
+         , cy <| (String.fromFloat (Point2d.yCoordinate label.position))
+         , r "5" ]
+         []
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
