@@ -1,4 +1,4 @@
-module Main exposing (init, main, update, view)
+port module Main exposing (init, main, update, view)
 
 import Browser
 import Collage.Render as CollageRender
@@ -29,8 +29,7 @@ main =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initModel
-    , Cmd.none
-      --, Ports.setLayout
+    , Ports.setLayout ()
     )
 
 
