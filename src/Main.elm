@@ -58,7 +58,7 @@ draw model =
     CollageLayout.stack (nodes ++ edges)
 
 
-drawEdge : Model -> Graph.Edge Edge -> Collage Msg
+drawEdge : Model -> Graph.Edge EdgeLabel -> Collage Msg
 drawEdge model { from, to, label } =
     let
         { money } =
@@ -83,7 +83,7 @@ drawEdge model { from, to, label } =
 -- sometihing with line
 
 
-drawNode : Model -> Graph.Node Node -> Collage Msg
+drawNode : Model -> Graph.Node NodeLabel -> Collage Msg
 drawNode { hoveringId } { label, id } =
     let
         { position, entity, name } =

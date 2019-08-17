@@ -1,11 +1,7 @@
-module Types exposing (Edge, Entity(..), Graph, Node, Organ(..), Party(..), PoliticianData)
+module Types exposing (EdgeLabel, Entity(..), Graph, NodeLabel, Organ(..), Party(..), PoliticianData)
 
 import Graph
 import Point2d exposing (Point2d)
-
-
-type alias Graph =
-    Graph.Graph Node Edge
 
 
 type Party
@@ -16,13 +12,6 @@ type Party
 type Organ
     = House
     | Senate
-
-
-type alias Node =
-    { name : String
-    , entity : Entity
-    , position : Point2d
-    }
 
 
 type Entity
@@ -38,5 +27,20 @@ type alias PoliticianData =
     }
 
 
-type alias Edge =
+
+-- Graph labels
+
+
+type alias Graph =
+    Graph.Graph NodeLabel EdgeLabel
+
+
+type alias NodeLabel =
+    { name : String
+    , entity : Entity
+    , position : Point2d
+    }
+
+
+type alias EdgeLabel =
     { money : Int }
