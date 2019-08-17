@@ -2,6 +2,9 @@ import Html exposing (text, div, pre)
 import Browser
 import Graph
 import Point2d exposing (Point2d)
+import Collage exposing (circle, rectangle, filled, uniform)
+import Collage.Layout exposing (at, topLeft)
+import Collage.Render exposing (svg)
 
 type alias Graph = Graph.Graph Node Edge
 
@@ -133,7 +136,10 @@ init _ =
 view : Model -> Browser.Document Msg
 view model = 
   { title = "MoneyMap"
-  , body =  [ pre [] [text (Debug.toString model)] ]
+  , body =  
+    [ 
+      pre [] [text (Debug.toString model)] 
+    ]
   }
 
 
