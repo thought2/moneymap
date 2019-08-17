@@ -2,6 +2,15 @@ import Html exposing (text, div, pre)
 import Browser
 import Graph
 import Point2d exposing (Point2d)
+import Collage exposing (..)
+import Collage.Layout exposing (..)
+import Collage.Render exposing (..)
+import Collage.Events exposing (onClick)
+import Collage.Render exposing (svg)
+import Collage.Text exposing (fromString)
+import Color exposing (..)
+import Svg exposing (..)
+import Svg.Attributes 
 
 type alias Graph = Graph.Graph Node Edge
 
@@ -113,6 +122,8 @@ sampleData =
   in
     Graph.fromNodesAndEdges nodes edges
 
+
+
 main : Program () Model Msg
 main =
   Browser.document 
@@ -121,6 +132,27 @@ main =
     , update = update
     , subscriptions = \_ -> Sub.none
     }
+    svg
+    [ width "120"
+    , height "120"
+    , viewBox "0 0 120 120"
+    ]
+    [ rect
+        [ x "10"
+        , y "10"
+        , width "100"
+        , height "100"
+        , rx "15"
+        , ry "15"
+        ]
+        []
+    , circle
+        [ cx "50"
+        , cy "50"
+        , r "50"
+        ]
+        []
+    ]
 
 
 type Msg 
@@ -132,8 +164,9 @@ init _ =
 
 view : Model -> Browser.Document Msg
 view model = 
+
   { title = "MoneyMap"
-  , body =  [ pre [] [text (Debug.toString model)] ]
+  , body =  [ pre [] [text (Debug.toString model)], svg rect ]
   }
 
 
