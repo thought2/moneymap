@@ -136,21 +136,6 @@ drawPolitician { party } =
         |> filled (uniform color)
 
 
-
-{-
-   drawEntity : Node -> Entity -> Collage msg
-   drawEntity {name}
--}
-{-
-   nodeCircle : (Graph.Node Node) -> Svg Msg
-   nodeCircle {label} =
-     circle [ cx <| (String.fromFloat (Point2d.xCoordinate label.position))
-            , cy <| (String.fromFloat (Point2d.yCoordinate label.position))
-            , r "5" ]
-            []
--}
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
