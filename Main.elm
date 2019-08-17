@@ -1,8 +1,7 @@
-import Html exposing (text, div)
+import Html exposing (text, div, pre)
 import Browser
 import Graph
 import Point2d exposing (Point2d)
-
 
 type alias Graph = Graph.Graph Node Edge
 
@@ -60,7 +59,7 @@ main =
     { init = init
     , view = view
     , update = update
-    , subscriptions = subscriptions
+    , subscriptions = \_ -> Sub.none
     }
 
 
@@ -74,12 +73,10 @@ init _ =
 view : Model -> Browser.Document Msg
 view model = 
   { title = "MoneyMap"
-  , body =  [ text "Hello" ]
+  , body =  [ pre [] [text (Debug.toString model)] ]
   }
 
 
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = 
   (model, Cmd.none)
-
-subscriptions model =
-    Sub.none
