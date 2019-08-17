@@ -3,6 +3,7 @@ module Main exposing (init, main, update, view)
 import Browser
 import Collage.Render as CollageRender
 import Draw exposing (draw)
+import Ports
 import SampleData exposing (sampleData)
 import Types exposing (..)
 
@@ -27,7 +28,17 @@ main =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { graph = sampleData, hoveringId = Nothing }, Cmd.none )
+    ( initModel
+    , Cmd.none
+      --, Ports.setLayout
+    )
+
+
+initModel : Model
+initModel =
+    { graph = sampleData
+    , hoveringId = Nothing
+    }
 
 
 
@@ -48,6 +59,9 @@ update msg model =
               }
             , Cmd.none
             )
+
+        GotLayout layout ->
+            ( model, Cmd.none )
 
 
 

@@ -1,7 +1,11 @@
-module Types exposing (EdgeLabel, Entity(..), Graph, Model, Msg(..), NodeLabel, Organ(..), Party(..), PoliticianData)
+module Types exposing (EdgeLabel, Entity(..), Graph, GraphLayout, Model, Msg(..), NodeLabel, Organ(..), Party(..), PoliticianData)
 
 import Graph
 import Point2d exposing (Point2d)
+
+
+
+-- App
 
 
 type alias Model =
@@ -12,6 +16,11 @@ type alias Model =
 
 type Msg
     = Hover { enter : Bool, id : Graph.NodeId }
+    | GotLayout GraphLayout
+
+
+
+-- Common
 
 
 type Party
@@ -38,7 +47,7 @@ type alias PoliticianData =
 
 
 
--- Graph labels
+-- Graph
 
 
 type alias Graph =
@@ -54,3 +63,23 @@ type alias NodeLabel =
 
 type alias EdgeLabel =
     { money : Int }
+
+
+type alias SimpleVector =
+    ( Float, Float )
+
+
+type alias GraphLayout =
+    { nodes :
+        List
+            { id : Graph.NodeId
+            , position : SimpleVector
+            , size : SimpleVector
+            }
+    , edges :
+        List
+            { fromId : Graph.NodeId
+            , toId : Graph.NodeId
+            , points : List SimpleVector
+            }
+    }
