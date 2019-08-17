@@ -1,8 +1,13 @@
-import Html exposing (text)
+import Html exposing (text, div)
+import Browser
 import Graph
 import Point2d exposing (Point2d)
 
+
 type alias Graph = Graph.Graph Node Edge
+
+type alias Model = Graph
+
 
 type Party 
   = Democrat
@@ -49,6 +54,32 @@ sampleData =
   in
     Graph.fromNodesAndEdges nodes edges
 
+main : Program () Model Msg
 main =
-  text "Hello, world!"
+  Browser.document 
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
 
+
+type Msg 
+  = Pan
+
+init _ = 
+  (sampleData, Cmd.none)
+
+
+view : Model -> Browser.Document Msg
+view model = 
+  { title = "MoneyMap"
+  , body =  [ text "Hello" ]
+  }
+
+
+update msg model = 
+  (model, Cmd.none)
+
+subscriptions model =
+    Sub.none
