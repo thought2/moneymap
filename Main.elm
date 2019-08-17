@@ -166,9 +166,27 @@ view model =
 
 draw : Model -> Collage Msg
 draw model =
-    List.map (drawNode model) (Graph.nodes model.graph)
-        |> CollageLayout.stack
+    let nodes = List.map (drawNode model) (Graph.nodes model.graph)
+        edges = List.map (drawEdge model) (Graph.edges model.graph)
+    in 
+      CollageLayout.stack (nodes ++ edges)
 
+
+drawEdge : Model -> Graph.Edge Edge -> Collage Msg
+drawEdge model {from, to, label} = 
+    let {money} = label
+        fromNode = Graph.get from model.graph
+        toNode = Graph.get to model.graph
+    in
+      case (fromNode, toNode) of
+          (Just f, Just t) ->
+              segment (Point2d.coordinates f.node.label.position) (Point2d.coordinates t.node.label.position)
+                |>   traced (dot thick (uniform yellow))
+ 
+      
+          _ -> group []
+              
+     -- sometihing with line
 
 drawNode : Model -> Graph.Node Node -> Collage Msg
 drawNode { hoveringId } { label, id } =
