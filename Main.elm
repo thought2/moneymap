@@ -1,19 +1,24 @@
-module Main exposing (Edge, Entity(..), Graph, Model, Msg(..), Node, Organ(..), Party(..), drawGraph, drawNode, init, main, sampleData, update, view)
+module Main exposing (Edge, Entity(..), Graph, Model, Msg(..), Node, Organ(..), Party(..), draw, drawNode, init, main, sampleData, update, view)
 
 import Browser
 import Collage exposing (..)
+import Collage.Events as CollageEvents
 import Collage.Layout as CollageLayout
 import Collage.Render as CollageRender
+import Collage.Text as CollageText
 import Color exposing (..)
 import Graph
 import Point2d exposing (Point2d)
+
 
 type alias Graph =
     Graph.Graph Node Edge
 
 
 type alias Model =
-    Graph
+    { graph : Graph
+    , hoveringId : Maybe Graph.NodeId
+    }
 
 
 type Party
@@ -143,45 +148,67 @@ main =
 
 
 type Msg
-    = Pan
+    = Hover { enter : Bool, id : Graph.NodeId }
 
 
 init _ =
-    ( sampleData, Cmd.none )
+    ( { graph = sampleData, hoveringId = Nothing }, Cmd.none )
 
 
 view : Model -> Browser.Document Msg
 view model =
     { title = "MoneyMap"
     , body =
-        [ CollageRender.svgBox ( 1500, 1500 ) (drawGraph model)
+        [ CollageRender.svgBox ( 1500, 1500 ) (draw model)
         ]
     }
 
 
-drawGraph : Graph -> Collage msg
-drawGraph graph =
-    List.map drawNode (Graph.nodes graph)
+draw : Model -> Collage Msg
+draw model =
+    List.map (drawNode model) (Graph.nodes model.graph)
         |> CollageLayout.stack
 
 
-drawNode : Graph.Node Node -> Collage msg
-drawNode { label } =
+drawNode : Model -> Graph.Node Node -> Collage Msg
+drawNode { hoveringId } { label, id } =
     let
         { position, entity, name } =
             label
     in
-    shift (Point2d.coordinates label.position) <|
-        case entity of
+    CollageLayout.stack <|
+        [ (case entity of
             Politician data ->
                 drawPolitician data
 
             _ ->
                 rectangle 10.0 10.0
                     |> filled (uniform grey)
+          )
+            |> shift (Point2d.coordinates label.position)
+            |> CollageEvents.onMouseEnter (\_ -> Hover { enter = True, id = id })
+            |> CollageEvents.onMouseLeave (\_ -> Hover { enter = False, id = id })
+        ]
+            ++ (case hoveringId of
+                    Just nodeId ->
+                        if nodeId == id then
+                            [ CollageText.fromString name
+                                |> CollageText.shape CollageText.Italic
+                                |> CollageText.size CollageText.huge
+                                |> rendered
+                                |> shift (Point2d.coordinates label.position)
+                                |> shift (10.0, -25.0)
+                            ]
+
+                        else
+                            []
+
+                    Nothing ->
+                        []
+               )
 
 
-drawPolitician : PoliticianData -> Collage msg
+drawPolitician : PoliticianData -> Collage Msg
 drawPolitician { party } =
     let
         color =
@@ -213,4 +240,15 @@ drawPolitician { party } =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        Hover { enter, id } ->
+            ( { model
+                | hoveringId =
+                    if enter then
+                        Just id
+
+                    else
+                        Nothing
+              }
+            , Cmd.none
+            )
