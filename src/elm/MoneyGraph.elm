@@ -1,8 +1,9 @@
-module MoneyGraph exposing (EdgeLabel, GraphLayout, MoneyGraph, NodeLabel, SimpleVector)
+module MoneyGraph exposing (EdgeLabel, MoneyGraph, NodeLabel)
 
 -- Graph
 
 import CommonTypes exposing (Entity)
+import Dagre
 import Graph exposing (Graph)
 import Point2d exposing (Point2d)
 
@@ -22,21 +23,11 @@ type alias EdgeLabel =
     { money : Int }
 
 
-type alias SimpleVector =
-    ( Float, Float )
+toDagreInput : MoneyGraph -> Dagre.Input
+toDagreInput =
+    Debug.todo "toGraphLayout"
 
 
-type alias GraphLayout =
-    { nodes :
-        List
-            { id : Graph.NodeId
-            , position : SimpleVector
-            , size : SimpleVector
-            }
-    , edges :
-        List
-            { fromId : Graph.NodeId
-            , toId : Graph.NodeId
-            , points : List SimpleVector
-            }
-    }
+updateLayout : Dagre.Output -> MoneyGraph -> MoneyGraph
+updateLayout =
+    Debug.todo "updateLayout"

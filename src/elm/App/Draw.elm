@@ -1,4 +1,4 @@
-module Draw exposing (draw, drawEdge, drawNode, drawPolitician)
+module App.Draw exposing (draw)
 
 import App.Types exposing (Model, Msg(..))
 import Collage exposing (..)
@@ -67,17 +67,21 @@ drawDot { label, id } =
         { entity } =
             label
     in
-    (case entity of
+    drawEntity entity
+        |> shift (Point2d.coordinates label.position)
+        |> onMouseEnter (\_ -> Hover { enter = True, id = id })
+        |> onMouseLeave (\_ -> Hover { enter = False, id = id })
+
+
+drawEntity : Entity -> Collage Msg
+drawEntity entity =
+    case entity of
         Politician data ->
             drawPolitician data
 
         _ ->
             rectangle 10.0 10.0
                 |> filled (uniform grey)
-    )
-        |> shift (Point2d.coordinates label.position)
-        |> onMouseEnter (\_ -> Hover { enter = True, id = id })
-        |> onMouseLeave (\_ -> Hover { enter = False, id = id })
 
 
 drawText : Graph.Node NodeLabel -> Collage Msg

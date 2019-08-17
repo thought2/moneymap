@@ -1,10 +1,10 @@
-module App exposing (init, initModel, update, view)
+module App exposing (init, update, view)
 
+import App.Draw exposing (draw)
 import App.Types exposing (Model, Msg(..))
 import Browser
 import Collage.Render as CollageRender
-import Draw exposing (draw)
-import Ports
+import Dagre
 import SampleData exposing (sampleData)
 
 
@@ -15,7 +15,7 @@ import SampleData exposing (sampleData)
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initModel
-    , Ports.setLayout ()
+    , Dagre.setLayout ()
     )
 
 
