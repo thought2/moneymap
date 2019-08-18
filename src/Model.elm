@@ -12,6 +12,10 @@ type alias Graph =
 type alias Model =
     { graph : Graph
     , hoveringId : Maybe Graph.NodeId
+    , viewBox :
+        { position : Point2d
+        , size : Point2d
+        }
     }
 
 

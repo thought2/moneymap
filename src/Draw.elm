@@ -5,7 +5,7 @@ import Color exposing (..)
 import Point2d exposing (Point2d)
 import Collage.Layout as CollageLayout
 import Collage.Text as CollageText
-import Collage.Events as CollageEvents
+import Collage.Events as CollageEvents exposing (onMouseEnter, onMouseLeave)
 import Collage exposing (..)
 import Graph
 
@@ -50,8 +50,8 @@ drawNode { hoveringId } { label, id } =
                     |> filled (uniform grey)
           )
             |> shift (Point2d.coordinates label.position)
-            |> CollageEvents.onMouseEnter (\_ -> Hover { enter = True, id = id })
-            |> CollageEvents.onMouseLeave (\_ -> Hover { enter = False, id = id })
+            |> onMouseEnter (\_ -> Hover { enter = True, id = id })
+            |> onMouseLeave (\_ -> Hover { enter = False, id = id })
         ]
             ++ (case hoveringId of
                     Just nodeId ->
