@@ -9,6 +9,8 @@ const app = Elm.Main.init({
 app.ports.setLayout.subscribe(({ nodes, edges }) => {
   var graph = new dagre.graphlib.Graph();
 
+  graph.setGraph({});
+
   nodes.forEach(({ id, label }) => {
     graph.setNode(id.toString(), label);
   });

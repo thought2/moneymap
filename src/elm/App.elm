@@ -1,4 +1,4 @@
-module App exposing (init, update, view)
+module App exposing (init, subscriptions, update, view)
 
 import App.Draw exposing (draw)
 import App.Types exposing (Model, Msg(..))
@@ -67,6 +67,9 @@ update msg model =
             , Cmd.none
             )
 
+        NoOp ->
+            ( model, Cmd.none )
+
         GotLayout layout ->
             ( { model
                 | graph =
@@ -88,3 +91,12 @@ view model =
         [ CollageRender.svgBox ( 1500, 1500 ) (draw model)
         ]
     }
+
+
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    LayoutedGraphDagre.getLayout (\_ -> NoOp)

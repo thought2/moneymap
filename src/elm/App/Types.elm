@@ -13,4 +13,5 @@ type alias Model =
 
 type Msg
     = Hover { enter : Bool, id : Graph.NodeId }
+    | NoOp
     | GotLayout LayoutedGraph

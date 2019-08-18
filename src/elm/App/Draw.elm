@@ -9,7 +9,6 @@ import Color exposing (..)
 import CommonTypes exposing (Entity(..), Party(..), Politician, toEntityCommon)
 import Graph
 import LayoutedMoneyGraph
-import Point2d
 import Vector2d
 
 

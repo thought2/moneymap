@@ -28,7 +28,7 @@ type alias EdgeLabel =
 defaultNodeLabel : NodeLabel
 defaultNodeLabel =
     { position = Vector2d.zero
-    , size = Vector2d.zero
+    , size = Vector2d.fromComponents ( 10.0, 10.0 )
     }
 
 
