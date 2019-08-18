@@ -1,8 +1,8 @@
 module App.Types exposing (Model, Msg(..))
 
-import Dagre
 import Graph
-import MoneyGraph exposing (LayoutedMoneyGraph, MoneyGraph)
+import LayoutedGraph exposing (LayoutedGraph)
+import LayoutedMoneyGraph exposing (LayoutedMoneyGraph)
 
 
 type alias Model =
@@ -13,4 +13,4 @@ type alias Model =
 
 type Msg
     = Hover { enter : Bool, id : Graph.NodeId }
-    | GotLayout Dagre.Output
+    | GotLayout LayoutedGraph

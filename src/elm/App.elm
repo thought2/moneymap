@@ -6,7 +6,9 @@ import Browser
 import Collage.Render as CollageRender
 import Dagre
 import Graph
-import MoneyGraph exposing (LayoutedMoneyGraph, defaultEdgeLayout, defaultNodeLayout)
+import LayoutedGraph
+import LayoutedGraph.Dagre as LayoutedGraphDagre
+import LayoutedMoneyGraph exposing (LayoutedMoneyGraph)
 import SampleData exposing (sampleData)
 
 
@@ -17,7 +19,8 @@ import SampleData exposing (sampleData)
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initModel
-    , Dagre.setLayout (MoneyGraph.toDagreInput initModel.graph)
+    , LayoutedGraphDagre.setLayout
+        (initGraph |> LayoutedMoneyGraph.toLayoutedGraph)
     )
 
 
@@ -32,9 +35,17 @@ initGraph : LayoutedMoneyGraph
 initGraph =
     sampleData
         |> Graph.mapNodes
-            (\data -> { data = data, layout = defaultNodeLayout })
+            (\data ->
+                { data = data
+                , layout = LayoutedGraph.defaultNodeLabel
+                }
+            )
         |> Graph.mapEdges
-            (\data -> { data = data, layout = defaultEdgeLayout })
+            (\data ->
+                { data = data
+                , layout = LayoutedGraph.defaultEdgeLabel
+                }
+            )
 
 
 
@@ -59,7 +70,7 @@ update msg model =
         GotLayout layout ->
             ( { model
                 | graph =
-                    MoneyGraph.updateLayout layout model.graph
+                    LayoutedMoneyGraph.updateLayout layout model.graph
                         |> Maybe.withDefault model.graph
               }
             , Cmd.none

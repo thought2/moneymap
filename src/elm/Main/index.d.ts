@@ -7,10 +7,10 @@ export namespace Elm {
     export interface App {
       ports: {
         setLayout: {
-          subscribe(callback: (data: { nodes: { id: string; data: { width: number; height: number } }[]; edges: { from: string; to: string }[] }) => void): void
+          subscribe(callback: (data: { nodes: { id: number; label: { width: number; height: number; x: number; y: number } }[]; edges: { from: number; to: number; label: { points: { x: number; y: number }[] } }[] }) => void): void
         }
         getLayout: {
-          send(data: { nodes: { id: string; data: { x: number; y: number } }[]; edges: { from: string; to: string; data: { points: { x: number; y: number }[] } }[] }): void
+          send(data: { nodes: { id: number; label: { width: number; height: number; x: number; y: number } }[]; edges: { from: number; to: number; label: { points: { x: number; y: number }[] } }[] }): void
         }
       };
     }

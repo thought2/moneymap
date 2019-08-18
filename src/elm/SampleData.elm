@@ -11,52 +11,98 @@ sampleData =
     let
         nodes =
             [ Graph.Node 0
-                { name = "NRA"
-                , entity = Company
+                { entity =
+                    EntityCompany
+                        { name = "NRA"
+                        }
                 }
             , Graph.Node 1
-                { name = "Marsha Blackburn"
-                , entity = Politician { party = Republican, organ = House }
+                { entity =
+                    EntityPolitician
+                        { name = "Marsha Blackburn"
+                        , party = Republican
+                        , organ = House
+                        }
                 }
             , Graph.Node 2
-                { name = "Ted Cruz"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "Ted Cruz"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             , Graph.Node 3
-                { name = "Dean Heller"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "Dean Heller"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             , Graph.Node 4
-                { name = "Roger Wicker"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "Roger Wicker"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             , Graph.Node 5
-                { name = "John Barrasso"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "John Barrasso"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             , Graph.Node 5
-                { name = "John Barrasso"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "John Barrasso"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             , Graph.Node 6
-                { name = "Collin Peterson"
-                , entity = Politician { party = Democrat, organ = House }
+                { entity =
+                    EntityPolitician
+                        { name = "Collin Peterson"
+                        , party = Democrat
+                        , organ = House
+                        }
                 }
             , Graph.Node 7
-                { name = "Henry Cuellar"
-                , entity = Politician { party = Democrat, organ = House }
+                { entity =
+                    EntityPolitician
+                        { name = "Henry Cuellar"
+                        , party = Democrat
+                        , organ = House
+                        }
                 }
             , Graph.Node 8
-                { name = "Cindy Hyde-Smith"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "Cindy Hyde-Smith"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             , Graph.Node 9
-                { name = "Luther Strange"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "Luther Strange"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             , Graph.Node 10
-                { name = "Deb Fischer"
-                , entity = Politician { party = Republican, organ = Senate }
+                { entity =
+                    EntityPolitician
+                        { name = "Deb Fischer"
+                        , party = Republican
+                        , organ = Senate
+                        }
                 }
             ]
 

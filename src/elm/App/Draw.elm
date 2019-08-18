@@ -6,9 +6,9 @@ import Collage.Events exposing (..)
 import Collage.Layout exposing (..)
 import Collage.Text as CollageText
 import Color exposing (..)
-import CommonTypes exposing (Entity(..), Party(..), PoliticianData)
+import CommonTypes exposing (Entity(..), Party(..), Politician, toEntityCommon)
 import Graph
-import MoneyGraph exposing (EdgeLabel, NodeLabel)
+import LayoutedMoneyGraph
 import Point2d
 import Vector2d
 
@@ -25,7 +25,36 @@ draw ({ graph } as model) =
     stack (nodes ++ edges)
 
 
-drawEdge : Model -> Graph.Edge EdgeLabel -> Collage Msg
+drawNode : Model -> LayoutedMoneyGraph.Node -> Collage Msg
+drawNode { hoveringId } ({ id } as node) =
+    stack <|
+        [ drawDot node
+        , case hoveringId of
+            Just nodeId ->
+                if nodeId == id then
+                    drawText node
+
+                else
+                    empty
+
+            Nothing ->
+                empty
+        ]
+
+
+drawDot : LayoutedMoneyGraph.Node -> Collage Msg
+drawDot { label, id } =
+    let
+        { data, layout } =
+            label
+    in
+    drawEntity data.entity
+        |> shift (Vector2d.components layout.position)
+        |> onMouseEnter (\_ -> Hover { enter = True, id = id })
+        |> onMouseLeave (\_ -> Hover { enter = False, id = id })
+
+
+drawEdge : Model -> LayoutedMoneyGraph.Edge -> Collage Msg
 drawEdge model { from, to } =
     let
         maybeFromNode =
@@ -45,39 +74,10 @@ drawEdge model { from, to } =
             empty
 
 
-drawNode : Model -> Graph.Node NodeLabel -> Collage Msg
-drawNode { hoveringId } ({ id } as node) =
-    stack <|
-        [ drawDot node
-        , case hoveringId of
-            Just nodeId ->
-                if nodeId == id then
-                    drawText node
-
-                else
-                    empty
-
-            Nothing ->
-                empty
-        ]
-
-
-drawDot : Graph.Node NodeLabel -> Collage Msg
-drawDot { label, id } =
-    let
-        { data, layout } =
-            label
-    in
-    drawEntity data.entity
-        |> shift (Vector2d.components layout.position)
-        |> onMouseEnter (\_ -> Hover { enter = True, id = id })
-        |> onMouseLeave (\_ -> Hover { enter = False, id = id })
-
-
 drawEntity : Entity -> Collage Msg
 drawEntity entity =
     case entity of
-        Politician data ->
+        EntityPolitician data ->
             drawPolitician data
 
         _ ->
@@ -85,13 +85,16 @@ drawEntity entity =
                 |> filled (uniform grey)
 
 
-drawText : Graph.Node NodeLabel -> Collage Msg
+drawText : LayoutedMoneyGraph.Node -> Collage Msg
 drawText { label } =
     let
         { data, layout } =
             label
+
+        entityCommon =
+            toEntityCommon data.entity
     in
-    CollageText.fromString data.name
+    CollageText.fromString entityCommon.name
         |> CollageText.shape CollageText.Italic
         |> CollageText.size CollageText.huge
         |> rendered
@@ -99,7 +102,7 @@ drawText { label } =
         |> shift ( 10.0, -25.0 )
 
 
-drawPolitician : PoliticianData -> Collage Msg
+drawPolitician : Politician -> Collage Msg
 drawPolitician { party } =
     let
         color =
