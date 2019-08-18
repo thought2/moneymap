@@ -10,6 +10,7 @@ import CommonTypes exposing (Entity(..), Party(..), PoliticianData)
 import Graph
 import MoneyGraph exposing (EdgeLabel, NodeLabel)
 import Point2d
+import Vector2d
 
 
 draw : Model -> Collage Msg
@@ -28,16 +29,16 @@ drawEdge : Model -> Graph.Edge EdgeLabel -> Collage Msg
 drawEdge model { from, to } =
     let
         maybeFromNode =
-            Graph.get from model.graph
+            Maybe.map .node <| Graph.get from model.graph
 
         maybeToNode =
-            Graph.get to model.graph
+            Maybe.map .node <| Graph.get to model.graph
     in
     case ( maybeFromNode, maybeToNode ) of
         ( Just fromNode, Just toNode ) ->
             segment
-                (Point2d.coordinates fromNode.node.label.position)
-                (Point2d.coordinates toNode.node.label.position)
+                (Vector2d.components fromNode.label.layout.position)
+                (Vector2d.components toNode.label.layout.position)
                 |> traced (dot thick (uniform yellow))
 
         _ ->
@@ -64,11 +65,11 @@ drawNode { hoveringId } ({ id } as node) =
 drawDot : Graph.Node NodeLabel -> Collage Msg
 drawDot { label, id } =
     let
-        { entity } =
+        { data, layout } =
             label
     in
-    drawEntity entity
-        |> shift (Point2d.coordinates label.position)
+    drawEntity data.entity
+        |> shift (Vector2d.components layout.position)
         |> onMouseEnter (\_ -> Hover { enter = True, id = id })
         |> onMouseLeave (\_ -> Hover { enter = False, id = id })
 
@@ -87,14 +88,14 @@ drawEntity entity =
 drawText : Graph.Node NodeLabel -> Collage Msg
 drawText { label } =
     let
-        { name } =
+        { data, layout } =
             label
     in
-    CollageText.fromString name
+    CollageText.fromString data.name
         |> CollageText.shape CollageText.Italic
         |> CollageText.size CollageText.huge
         |> rendered
-        |> shift (Point2d.coordinates label.position)
+        |> shift (Vector2d.components layout.position)
         |> shift ( 10.0, -25.0 )
 
 

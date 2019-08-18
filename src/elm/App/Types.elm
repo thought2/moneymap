@@ -2,11 +2,11 @@ module App.Types exposing (Model, Msg(..))
 
 import Dagre
 import Graph
-import MoneyGraph exposing (MoneyGraph)
+import MoneyGraph exposing (LayoutedMoneyGraph, MoneyGraph)
 
 
 type alias Model =
-    { graph : MoneyGraph
+    { graph : LayoutedMoneyGraph
     , hoveringId : Maybe Graph.NodeId
     }
 

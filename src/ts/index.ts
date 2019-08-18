@@ -9,8 +9,8 @@ const app = Elm.Main.init({
 app.ports.setLayout.subscribe(({ nodes, edges }) => {
   var graph = new dagre.graphlib.Graph();
 
-  nodes.forEach(({ id, data }) => {
-    graph.setNode(id, data);
+  nodes.forEach(({ id, layout }) => {
+    graph.setNode(id, layout);
   });
 
   edges.forEach(({ from, to }) => {
@@ -20,9 +20,9 @@ app.ports.setLayout.subscribe(({ nodes, edges }) => {
   dagre.layout(graph);
 
   app.ports.getLayout.send({
-    nodes: graph.nodes().map(id => ({ id, data: graph.node(id) })),
+    nodes: graph.nodes().map(id => ({ id, layout: graph.node(id) })),
     edges: graph
       .edges()
-      .map(edge => ({ from: edge.v, to: edge.w, data: graph.edge(edge) }))
+      .map(edge => ({ from: edge.v, to: edge.w, layout: graph.edge(edge) }))
   });
 });

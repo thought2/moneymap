@@ -5,7 +5,8 @@ import App.Types exposing (Model, Msg(..))
 import Browser
 import Collage.Render as CollageRender
 import Dagre
-import MoneyGraph
+import Graph
+import MoneyGraph exposing (LayoutedMoneyGraph, defaultEdgeLayout, defaultNodeLayout)
 import SampleData exposing (sampleData)
 
 
@@ -22,9 +23,18 @@ init _ =
 
 initModel : Model
 initModel =
-    { graph = sampleData
+    { graph = initGraph
     , hoveringId = Nothing
     }
+
+
+initGraph : LayoutedMoneyGraph
+initGraph =
+    sampleData
+        |> Graph.mapNodes
+            (\data -> { data = data, layout = defaultNodeLayout })
+        |> Graph.mapEdges
+            (\data -> { data = data, layout = defaultEdgeLayout })
 
 
 
