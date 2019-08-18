@@ -57,7 +57,11 @@ update msg model =
             )
 
         GotLayout layout ->
-            ( { model | graph = MoneyGraph.updateLayout layout model.graph }
+            ( { model
+                | graph =
+                    MoneyGraph.updateLayout layout model.graph
+                        |> Maybe.withDefault model.graph
+              }
             , Cmd.none
             )
 

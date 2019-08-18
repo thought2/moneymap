@@ -1,6 +1,4 @@
-port module Dagre exposing (Input, InputEdge, InputNode, NodeId, Output, OutputEdge, OutputNode, Point, Size, getLayout, pointFromVector2d, setLayout, sizeFromVector2d)
-
--- import Graph exposing (NodeId)
+port module Dagre exposing (Input, InputEdge, InputNode, NodeId, Output, OutputEdge, OutputNode, Point, Size, getLayout, pointFromVector2d, pointToVector2d, setLayout, sizeFromVector2d, sizeToVector2d)
 
 import Vector2d as Vector2d exposing (Vector2d)
 
@@ -44,16 +42,11 @@ type alias Input =
 
 
 type alias OutputNode =
-    { id : NodeId
-    , layout : Point
-    }
+    ( NodeId, Point )
 
 
 type alias OutputEdge =
-    { from : NodeId
-    , to : NodeId
-    , layout : { points : List Point }
-    }
+    ( ( NodeId, NodeId ), List Point )
 
 
 type alias Output =
@@ -88,3 +81,13 @@ pointFromVector2d vec =
     { x = Vector2d.xComponent vec
     , y = Vector2d.yComponent vec
     }
+
+
+pointToVector2d : Point -> Vector2d
+pointToVector2d { x, y } =
+    Vector2d.fromComponents ( x, y )
+
+
+sizeToVector2d : Size -> Vector2d
+sizeToVector2d { width, height } =
+    Vector2d.fromComponents ( width, height )
