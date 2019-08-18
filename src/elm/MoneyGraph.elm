@@ -1,4 +1,4 @@
-module MoneyGraph exposing (EdgeLabel, MoneyGraph, NodeLabel)
+module MoneyGraph exposing (EdgeLabel, MoneyGraph, NodeLabel, toDagreInput, updateLayout)
 
 -- Graph
 

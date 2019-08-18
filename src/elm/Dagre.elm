@@ -1,6 +1,10 @@
 port module Dagre exposing (Input, Output, getLayout, setLayout)
 
-import Graph
+-- import Graph exposing (NodeId)
+
+
+type alias NodeId =
+    String
 
 
 type alias Size =
@@ -14,13 +18,13 @@ type alias Point =
 type alias Input =
     { nodes :
         List
-            { id : Graph.NodeId
+            { id : NodeId
             , data : Size
             }
     , edges :
         List
-            { from : Graph.NodeId
-            , to : Graph.NodeId
+            { from : NodeId
+            , to : NodeId
             }
     }
 
@@ -28,13 +32,13 @@ type alias Input =
 type alias Output =
     { nodes :
         List
-            { id : Graph.NodeId
+            { id : NodeId
             , data : Point
             }
     , edges :
         List
-            { from : Graph.NodeId
-            , to : Graph.NodeId
+            { from : NodeId
+            , to : NodeId
             , data : { points : List Point }
             }
     }
@@ -44,7 +48,7 @@ type alias Output =
 -- PORTS
 
 
-port setLayout : () {- GraphLayout -} -> Cmd msg
+port setLayout : Input -> Cmd msg
 
 
 port getLayout : (Output -> msg) -> Sub msg

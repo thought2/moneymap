@@ -5,6 +5,7 @@ import App.Types exposing (Model, Msg(..))
 import Browser
 import Collage.Render as CollageRender
 import Dagre
+import MoneyGraph
 import SampleData exposing (sampleData)
 
 
@@ -15,7 +16,7 @@ import SampleData exposing (sampleData)
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initModel
-    , Dagre.setLayout ()
+    , Dagre.setLayout (MoneyGraph.toDagreInput initModel.graph)
     )
 
 
@@ -46,7 +47,9 @@ update msg model =
             )
 
         GotLayout layout ->
-            ( model, Cmd.none )
+            ( { model | graph = MoneyGraph.updateLayout layout model.graph }
+            , Cmd.none
+            )
 
 
 
