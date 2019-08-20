@@ -1,41 +1,25 @@
-port module Dagre exposing (Data, getLayout, setLayout)
+module Dagre exposing (Input, InputGraphLabel, RankDir(..))
+
+import Dagre.LowLevel.Input as LowLevelInput
+import Dagre.LowLevel.Output as LowLevelInput
+
+import Dagre.LowLevel.Graph exposing ( Graph)
 
 
-type alias NodeId =
-    Int
+defaultInputGraphLabel : InputGraphLabel
+defaultInputGraphLabel =
+    { rankDir = TopBottom
+    }
 
 
-type alias Data =
-    { nodes :
-        List
-            { id : NodeId
-            , label :
-                { width : Float
-                , height : Float
-                , x : Float
-                , y : Float
-                }
-            }
-    , edges :
-        List
-            { from : NodeId
-            , to : NodeId
-            , label :
-                { points :
-                    List
-                        { x : Float
-                        , y : Float
-                        }
-                }
-            }
+inputToLowLevel : Input -> LowLevel.Input
+inputToLowLevel value =
+    { label = inputGraphLabelToLowLevel value.graph
+    , nodes = List.map inputNodeLabelToLowLevel value.nodes
+    , edges = List.map inputEdgeLabelToLowLevel value.edges
     }
 
 
 
--- API
 
-
-port setLayout : Data -> Cmd msg
-
-
-port getLayout : (Data -> msg) -> Sub msg
+apLabel :
