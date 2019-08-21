@@ -5,6 +5,11 @@ import Graph exposing (Edge, Graph, Node)
 import Graph.Extra as Graph
 
 
+
+-- TODO: Add documentation of the purpose of this module
+-- TODO: Add documentation for the functions
+
+
 type alias GraphWithLabel g n e =
     { label : g
     , graph : Graph n e

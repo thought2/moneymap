@@ -74,6 +74,7 @@ toDagre graph =
         makeEdge _ =
             Dagre.Input.defaultEdgeLabel
                 |> (\r ->
+                        -- TODO: Get weight from money on edge label
                         { r | weight = 1.0 }
                    )
     in
@@ -87,6 +88,7 @@ toDagre graph =
 updateWithDagre : Dagre.Output.Graph -> MoneyGraph -> Maybe MoneyGraph
 updateWithDagre dagreGraph labeledGraph =
     let
+        -- TODO: Better variable names
         makeLabel x y =
             { y
                 | size =

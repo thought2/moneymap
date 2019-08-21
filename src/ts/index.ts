@@ -54,7 +54,7 @@ const portSetLayout = ({ label, nodes, edges }: Input) => {
   };
 
   app.ports.getLayout.send({
-    label: { width: 0, height: 0 },
+    label: { width: 0, height: 0 }, // TODO: Use real output from dagre
     nodes: graph.nodes().map(makeNode),
     edges: graph.edges().map(makeEdge)
   });

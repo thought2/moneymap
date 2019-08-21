@@ -5,6 +5,10 @@ import Graph
 import MoneyGraph.Data exposing (MoneyGraphData)
 
 
+
+-- TODO: Get rid of sample data and use real data
+
+
 sampleData : MoneyGraphData
 sampleData =
     let

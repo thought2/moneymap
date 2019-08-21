@@ -5,6 +5,11 @@ import IntDict
 import Maybe.Extra as Maybe
 
 
+
+-- TODO: Add documentation of the purpose of this module
+-- TODO: Add documentation for the functions
+
+
 getEdge : { from : NodeId, to : NodeId } -> Graph n e -> Maybe e
 getEdge { from, to } graph =
     Graph.get from graph
