@@ -19,15 +19,18 @@
   "homepage": "https://github.com/reinvdwoerd/moneymap#readme",
   "devDependencies": {
     "@types/dagre": "^0.7.42",
+    "elm": "^0.19.0",
     "elm-hot": "^1.1.2",
     "elm-test": "^0.19.0-rev6",
     "elm-typescript-interop": "0.0.15",
     "node-elm-compiler": "^5.0.4",
     "parcel": "^1.12.3",
+    "prettier": "^1.18.2",
     "typescript": "^3.5.3"
   },
   "dependencies": {
     "dagre": "^0.8.4",
-    "elm-doc-preview": "^3.0.0"
+    "elm-doc-preview": "^3.0.0",
+    "elm-verify-examples": "^4.0.1"
   }
 }
