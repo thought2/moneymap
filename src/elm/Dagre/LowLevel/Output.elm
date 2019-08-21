@@ -16,9 +16,7 @@ type alias NodeLabel =
 
 
 type alias EdgeLabel =
-    { x : Float
-    , y : Float
-    , points : List { x : Float, y : Float }
+    { points : List { x : Float, y : Float }
     }
 
 

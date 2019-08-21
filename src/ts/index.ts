@@ -6,10 +6,28 @@ const app = Elm.Main.init({
   flags: null
 });
 
-app.ports.setLayout.subscribe(({ nodes, edges }) => {
+type Input = {
+  label: dagre.GraphLabel;
+  nodes: Array<{ id: number; label: dagre.NodeConfig }>;
+  edges: Array<{ from: number; to: number; label: dagre.EdgeConfig }>;
+};
+
+type Output = {
+  label: { width: number; height: number };
+  nodes: Array<{ id: number; label: dagre.Node }>;
+  edges: Array<{ from: number; to: number; label: GraphEdge }>;
+};
+
+type GraphEdge = {
+  points: Array<{ x: number; y: number }>;
+  x: number;
+  y: number;
+};
+
+const portSetLayout = ({ label, nodes, edges }: Input) => {
   var graph = new dagre.graphlib.Graph();
 
-  graph.setGraph({});
+  graph.setGraph(label);
 
   nodes.forEach(({ id, label }) => {
     graph.setNode(id.toString(), label);
@@ -21,20 +39,25 @@ app.ports.setLayout.subscribe(({ nodes, edges }) => {
 
   dagre.layout(graph);
 
-  const makeNode = (id: string) => {
+  const makeNode = (id: string): { id: number; label: dagre.Node } => {
     return { id: parseInt(id), label: graph.node(id) };
   };
 
-  const makeEdge = (edge: Edge) => {
+  const makeEdge = (
+    edge: Edge
+  ): { from: number; to: number; label: GraphEdge } => {
     return {
       from: parseInt(edge.v),
       to: parseInt(edge.w),
-      label: graph.edge(edge)
+      label: graph.edge(edge) as GraphEdge
     };
   };
 
   app.ports.getLayout.send({
+    label: { width: 0, height: 0 },
     nodes: graph.nodes().map(makeNode),
     edges: graph.edges().map(makeEdge)
   });
-});
+};
+
+app.ports.setLayout.subscribe(portSetLayout);

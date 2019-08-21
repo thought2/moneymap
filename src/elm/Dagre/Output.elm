@@ -15,8 +15,7 @@ type alias NodeLabel =
 
 
 type alias EdgeLabel =
-    { position : ( Float, Float )
-    , points : List ( Float, Float )
+    { points : List ( Float, Float )
     }
 
 
@@ -50,6 +49,5 @@ edgeLabelFromLowLevel value =
         makePoint { x, y } =
             ( x, y )
     in
-    { position = ( value.x, value.y )
-    , points = List.map makePoint value.points
+    { points = List.map makePoint value.points
     }
