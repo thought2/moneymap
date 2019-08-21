@@ -13,7 +13,6 @@ build:
 
 # Hot reloading development
 dev:
-        # does not work yet, probably because of a bug in Elm
 	npx parcel $(ENTRY)
 
 # Run the test suite
