@@ -1,13 +1,11 @@
-module LayoutedGraph exposing (EdgeLabel, LayoutedGraph, NodeLabel, defaultEdgeLabel, defaultNodeLabel)
+module MoneyGraph.Visual exposing (EdgeLabel, GraphLabel, NodeLabel, defaultEdgeLabel, defaultGraphLabel, defaultNodeLabel)
 
--- Graph
-
-import Graph exposing (Graph)
 import Vector2d exposing (Vector2d)
 
 
-type alias LayoutedGraph =
-    Graph NodeLabel EdgeLabel
+type alias GraphLabel =
+    { size : Vector2d
+    }
 
 
 type alias NodeLabel =
@@ -23,6 +21,12 @@ type alias EdgeLabel =
 
 
 -- Defaults
+
+
+defaultGraphLabel : GraphLabel
+defaultGraphLabel =
+    { size = Vector2d.fromComponents ( 0.0, 0.0 )
+    }
 
 
 defaultNodeLabel : NodeLabel

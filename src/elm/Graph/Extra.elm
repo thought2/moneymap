@@ -17,33 +17,6 @@ getNode id graph =
         |> Maybe.map (.node >> .label)
 
 
-mapNodes2 : (n1 -> n2 -> n3) -> Graph n1 e -> Graph n2 e -> Maybe (Graph n3 e)
-mapNodes2 f graph1 graph2 =
-    let
-        maybeNodes : Maybe (List (Node n3))
-        maybeNodes =
-            Graph.nodeIds graph1
-                |> Maybe.traverse
-                    (\id ->
-                        Maybe.map2
-                            (\node1 node2 ->
-                                Node id (f node1 node2)
-                            )
-                            (getNode id graph1)
-                            (getNode id graph2)
-                    )
-
-        edges : List (Edge e)
-        edges =
-            Graph.edges graph1
-    in
-    maybeNodes
-        |> Maybe.map
-            (\nodes ->
-                Graph.fromNodesAndEdges nodes edges
-            )
-
-
 zipWith :
     (n1 -> n2 -> n3)
     -> (e1 -> e2 -> e3)

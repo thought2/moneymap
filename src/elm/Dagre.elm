@@ -1,25 +1,15 @@
-module Dagre exposing (Input, InputGraphLabel, RankDir(..))
+module Dagre exposing (getLayout, setLayout)
 
-import Dagre.LowLevel.Input as LowLevelInput
-import Dagre.LowLevel.Output as LowLevelInput
-
-import Dagre.LowLevel.Graph exposing ( Graph)
-
-
-defaultInputGraphLabel : InputGraphLabel
-defaultInputGraphLabel =
-    { rankDir = TopBottom
-    }
+import Dagre.Input as Input
+import Dagre.LowLevel.Ports as Ports
+import Dagre.Output as Output
 
 
-inputToLowLevel : Input -> LowLevel.Input
-inputToLowLevel value =
-    { label = inputGraphLabelToLowLevel value.graph
-    , nodes = List.map inputNodeLabelToLowLevel value.nodes
-    , edges = List.map inputEdgeLabelToLowLevel value.edges
-    }
+setLayout : Input.Graph -> Cmd msg
+setLayout graph =
+    Ports.setLayout <| Input.toLowLevel graph
 
 
-
-
-apLabel :
+getLayout : (Output.Graph -> msg) -> Sub msg
+getLayout f =
+    Ports.getLayout (Output.fromLowLevel >> f)

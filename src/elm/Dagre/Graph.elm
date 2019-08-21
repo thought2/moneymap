@@ -1,4 +1,4 @@
-module Dagre.LowLevel.Graph exposing (Edge, Graph, Node, NodeId, mapEdgeLabel, mapGraphLabel, mapNodeLabel)
+module Dagre.Graph exposing (Edge, Graph, Node, NodeId, mapEdgeLabel, mapGraphLabel, mapNodeLabel)
 
 
 type alias NodeId =

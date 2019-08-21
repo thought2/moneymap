@@ -8,13 +8,17 @@ import Collage.Text as CollageText
 import Color exposing (..)
 import CommonTypes exposing (Entity(..), Party(..), Politician, toEntityCommon)
 import Graph
-import LayoutedMoneyGraph
+import Graph.WithLabel as GraphWithLabel
+import MoneyGraph
 import Vector2d
 
 
 draw : Model -> Collage Msg
-draw ({ graph } as model) =
+draw model =
     let
+        graph =
+            model.graph.graph
+
         nodes =
             List.map (drawNode model) (Graph.nodes graph)
 
@@ -24,7 +28,7 @@ draw ({ graph } as model) =
     stack (nodes ++ edges)
 
 
-drawNode : Model -> LayoutedMoneyGraph.Node -> Collage Msg
+drawNode : Model -> MoneyGraph.Node -> Collage Msg
 drawNode { hoveringId } ({ id } as node) =
     stack <|
         [ drawDot node
@@ -41,7 +45,7 @@ drawNode { hoveringId } ({ id } as node) =
         ]
 
 
-drawDot : LayoutedMoneyGraph.Node -> Collage Msg
+drawDot : MoneyGraph.Node -> Collage Msg
 drawDot { label, id } =
     let
         { data, layout } =
@@ -53,14 +57,14 @@ drawDot { label, id } =
         |> onMouseLeave (\_ -> Hover { enter = False, id = id })
 
 
-drawEdge : Model -> LayoutedMoneyGraph.Edge -> Collage Msg
+drawEdge : Model -> MoneyGraph.Edge -> Collage Msg
 drawEdge model { from, to } =
     let
         maybeFromNode =
-            Maybe.map .node <| Graph.get from model.graph
+            Maybe.map .node <| Graph.get from model.graph.graph
 
         maybeToNode =
-            Maybe.map .node <| Graph.get to model.graph
+            Maybe.map .node <| Graph.get to model.graph.graph
     in
     case ( maybeFromNode, maybeToNode ) of
         ( Just fromNode, Just toNode ) ->
@@ -84,7 +88,7 @@ drawEntity entity =
                 |> filled (uniform grey)
 
 
-drawText : LayoutedMoneyGraph.Node -> Collage Msg
+drawText : MoneyGraph.Node -> Collage Msg
 drawText { label } =
     let
         { data, layout } =

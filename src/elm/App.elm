@@ -1,14 +1,8 @@
-module App exposing (init, subscriptions, update, view)
+module App exposing (init, subscriptions, update)
 
-import App.Draw exposing (draw)
 import App.Types exposing (Model, Msg(..))
-import Browser
-import Collage.Render as CollageRender
 import Dagre
-import Graph
-import LayoutedGraph
-import LayoutedGraph.Dagre as LayoutedGraphDagre
-import LayoutedMoneyGraph exposing (LayoutedMoneyGraph)
+import MoneyGraph exposing (MoneyGraph)
 import SampleData exposing (sampleData)
 
 
@@ -19,9 +13,15 @@ import SampleData exposing (sampleData)
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( initModel
-    , LayoutedGraphDagre.setLayout
-        (initGraph |> LayoutedMoneyGraph.toLayoutedGraph)
+    , initCmd initModel
     )
+
+
+initCmd : Model -> Cmd Msg
+initCmd model =
+    Cmd.batch
+        [ Dagre.setLayout (MoneyGraph.toDagre model.graph)
+        ]
 
 
 initModel : Model
@@ -31,21 +31,9 @@ initModel =
     }
 
 
-initGraph : LayoutedMoneyGraph
+initGraph : MoneyGraph
 initGraph =
-    sampleData
-        |> Graph.mapNodes
-            (\data ->
-                { data = data
-                , layout = LayoutedGraph.defaultNodeLabel
-                }
-            )
-        |> Graph.mapEdges
-            (\data ->
-                { data = data
-                , layout = LayoutedGraph.defaultEdgeLabel
-                }
-            )
+    MoneyGraph.fromData sampleData
 
 
 
@@ -70,27 +58,14 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
-        GotLayout layout ->
+        GotLayout dagreGraph ->
             ( { model
                 | graph =
-                    LayoutedMoneyGraph.updateLayout layout model.graph
+                    MoneyGraph.updateWithDagre dagreGraph model.graph
                         |> Maybe.withDefault model.graph
               }
             , Cmd.none
             )
-
-
-
--- VIEW
-
-
-view : Model -> Browser.Document Msg
-view model =
-    { title = "MoneyMap"
-    , body =
-        [ CollageRender.svgBox ( 1500, 1500 ) (draw model)
-        ]
-    }
 
 
 
@@ -99,4 +74,4 @@ view model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    LayoutedGraphDagre.getLayout (\_ -> NoOp)
+    Dagre.getLayout GotLayout

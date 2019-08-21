@@ -1,6 +1,6 @@
-module Dagre.Output exposing (EdgeLabel, GraphLabel, NodeLabel)
+module Dagre.Output exposing (EdgeLabel, Graph, GraphLabel, NodeLabel, fromLowLevel)
 
-import Dagre.LowLevel.Graph as LowLevelGraph
+import Dagre.Graph as Graph
 import Dagre.LowLevel.Output as LowLevelOutput
 
 
@@ -21,40 +21,35 @@ type alias EdgeLabel =
 
 
 type alias Graph =
-    LowLevelGraph.Graph GraphLabel NodeLabel EdgeLabel
+    Graph.Graph GraphLabel NodeLabel EdgeLabel
 
 
-toLowLevel : Graph -> LowLevelOutput.Graph
-toLowLevel graph =
+fromLowLevel : LowLevelOutput.Graph -> Graph
+fromLowLevel graph =
     graph
-        |> LowLevelGraph.mapGraphLabel graphLabelToLowLevel
-        |> LowLevelGraph.mapNodeLabel nodeLabelToLowLevel
-        |> LowLevelGraph.mapEdgeLabel edgeLabelToLowLevel
+        |> Graph.mapGraphLabel graphLabelFromLowLevel
+        |> Graph.mapNodeLabel nodeLabelFromLowLevel
+        |> Graph.mapEdgeLabel edgeLabelFromLowLevel
 
 
-graphLabelToLowLevel : GraphLabel -> LowLevelOutput.GraphLabel
-graphLabelToLowLevel value =
-    { width = Tuple.first value.size
-    , height = Tuple.second value.size
+graphLabelFromLowLevel : LowLevelOutput.GraphLabel -> GraphLabel
+graphLabelFromLowLevel value =
+    { size = ( value.width, value.height )
     }
 
 
-nodeLabelToLowLevel : NodeLabel -> LowLevelOutput.NodeLabel
-nodeLabelToLowLevel value =
-    { x = Tuple.first value.position
-    , y = Tuple.second value.position
+nodeLabelFromLowLevel : LowLevelOutput.NodeLabel -> NodeLabel
+nodeLabelFromLowLevel value =
+    { position = ( value.x, value.y )
     }
 
 
-edgeLabelToLowLevel : EdgeLabel -> LowLevelOutput.EdgeLabel
-edgeLabelToLowLevel value =
+edgeLabelFromLowLevel : LowLevelOutput.EdgeLabel -> EdgeLabel
+edgeLabelFromLowLevel value =
     let
-        makePoint point =
-            { x = Tuple.first point
-            , y = Tuple.second point
-            }
+        makePoint { x, y } =
+            ( x, y )
     in
-    { x = Tuple.first value.position
-    , y = Tuple.second value.position
+    { position = ( value.x, value.y )
     , points = List.map makePoint value.points
     }

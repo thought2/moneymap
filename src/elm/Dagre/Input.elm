@@ -1,6 +1,6 @@
-module Dagre.Output exposing (EdgeLabel, GraphLabel, NodeLabel, RankDir(..))
+module Dagre.Input exposing (EdgeLabel, Graph, GraphLabel, NodeLabel, RankDir(..), defaultEdgeLabel, defaultGraphLabel, defaultNodeLabel, toLowLevel)
 
-import Dagre.LowLevel.Graph as LowLevelGraph
+import Dagre.Graph as Graph
 import Dagre.LowLevel.Input as LowLevelInput
 
 
@@ -26,15 +26,15 @@ type alias EdgeLabel =
 
 
 type alias Graph =
-    LowLevelGraph.Graph GraphLabel NodeLabel EdgeLabel
+    Graph.Graph GraphLabel NodeLabel EdgeLabel
 
 
 toLowLevel : Graph -> LowLevelInput.Graph
 toLowLevel graph =
     graph
-        |> LowLevelGraph.mapGraphLabel graphLabelToLowLevel
-        |> LowLevelGraph.mapNodeLabel nodeLabelToLowLevel
-        |> LowLevelGraph.mapEdgeLabel edgeLabelToLowLevel
+        |> Graph.mapGraphLabel graphLabelToLowLevel
+        |> Graph.mapNodeLabel nodeLabelToLowLevel
+        |> Graph.mapEdgeLabel edgeLabelToLowLevel
 
 
 graphLabelToLowLevel : GraphLabel -> LowLevelInput.GraphLabel
@@ -70,3 +70,24 @@ rankDirToString rankDir =
 
         RightLeft ->
             "RL"
+
+
+
+-- DEFAULT
+
+
+defaultGraphLabel : GraphLabel
+defaultGraphLabel =
+    { rankDir = TopBottom }
+
+
+defaultNodeLabel : NodeLabel
+defaultNodeLabel =
+    { size = ( 0.0, 0.0 )
+    }
+
+
+defaultEdgeLabel : EdgeLabel
+defaultEdgeLabel =
+    { weight = 1.0
+    }
