@@ -1,4 +1,4 @@
-ENTRY=src/html/index.html
+ENTRY=html/index.html
 
 # Install dependencies
 install:
@@ -14,6 +14,9 @@ build:
 # Hot reloading development
 dev:
 	npx parcel $(ENTRY)
+
+docs:
+	npx -c 'cd elm; elm-doc-preview -n'
 
 # Run the test suite
 test:

@@ -27,6 +27,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "dagre": "^0.8.4"
+    "dagre": "^0.8.4",
+    "elm-doc-preview": "^3.0.0"
   }
 }
