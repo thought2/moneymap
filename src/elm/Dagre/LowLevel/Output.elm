@@ -1,4 +1,4 @@
-module Dagre.LowLevel.Output exposing (EdgeLabel, Graph, GraphLabel, NodeLabel)
+port module Dagre.LowLevel.Output exposing (EdgeLabel, Graph, GraphLabel, NodeLabel, getLayout)
 
 import Graph exposing (NodeId)
 
@@ -27,3 +27,6 @@ type alias Graph =
     , nodes : List { id : NodeId, label : NodeLabel }
     , edges : List { from : NodeId, to : NodeId, label : EdgeLabel }
     }
+
+
+port getLayout : (Graph -> msg) -> Sub msg

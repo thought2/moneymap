@@ -7,7 +7,10 @@ export namespace Elm {
     export interface App {
       ports: {
         setLayout: {
-          subscribe(callback: (data: { graph: { rankdir: string }; nodes: { id: number; label: { width: number; height: number } }[]; edges: { from: number; to: number; label: { weight: number } }[] }) => void): void
+          subscribe(callback: (data: { label: { rankdir: string }; nodes: { id: number; label: { width: number; height: number } }[]; edges: { from: number; to: number; label: { weight: number } }[] }) => void): void
+        }
+        getLayout: {
+          send(data: { label: { width: number; height: number }; nodes: { id: number; label: { x: number; y: number } }[]; edges: { from: number; to: number; label: { x: number; y: number; points: { x: number; y: number }[] } }[] }): void
         }
       };
     }
