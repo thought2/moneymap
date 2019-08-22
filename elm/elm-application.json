@@ -1,0 +1,7 @@
+{
+  "name": "reinvdwoerd/moneymap",
+  "summary": "TODO",
+  "version": "1.0.0",
+  "exposed-modules": ["SampleData", "Graph.Extra"],
+  "source-directories": ["src"]
+}

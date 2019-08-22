@@ -1,4 +1,4 @@
-ENTRY=src/html/index.html
+ENTRY=html/index.html
 
 # Install dependencies
 install:
@@ -6,19 +6,34 @@ install:
 
 # Production build
 build:
-        # Because elm-typescript-interop installs elm 18 and `parcel` uses it then
-	rm -rf node_modules/elm
-
 	npx parcel build $(ENTRY)
 
 # Hot reloading development
 dev:
-	npx parcel $(ENTRY)
+	npx parcel $(ENTRY) &
+
+# Serve module docs
+docs:
+	npx -c 'cd elm; elm-doc-preview --no-browser'
 
 # Run the test suite
 test:
-	npx elm-test
+	npx -c 'cd elm; elm-verify-examples'
+	npx -c 'cd elm; elm-test'
+
+# Run the test suite in watch mode
+test_watch:
+	npx watch 'make test' elm/src elm/tests/Tests
 
 # Generate typescript types from elm ports
 gen-ts:
 	npx elm-typescript-interop
+
+format:
+	npx prettier --write 'elm/**/*.json'
+	npx prettier --write 'ts/**/*.+(json|ts)'
+	npx prettier --write 'html/**/*.html'
+
+clean:
+	rm -rf node_modules
+	rm -rf elm/elm-stuff

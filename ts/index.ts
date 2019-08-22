@@ -1,4 +1,4 @@
-import { Elm } from "../elm/Main";
+import { Elm } from "../elm/src/Main";
 import dagre, { Edge } from "dagre";
 
 const app = Elm.Main.init({
