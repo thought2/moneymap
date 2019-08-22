@@ -28,4 +28,6 @@ gen-ts:
 	npx elm-typescript-interop
 
 format:
-	npx prettier
+	npx prettier --write 'elm/**/*.json'
+	npx prettier --write 'ts/**/*.+(json|ts)'
+	npx prettier --write 'html/**/*.html'

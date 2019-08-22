@@ -1,9 +1,9 @@
-import { Elm } from '../elm/src/Main';
-import dagre, { Edge } from 'dagre';
+import { Elm } from "../elm/src/Main";
+import dagre, { Edge } from "dagre";
 
 const app = Elm.Main.init({
-  node: document.getElementById('app'),
-  flags: null,
+  node: document.getElementById("app"),
+  flags: null
 });
 
 type Input = {
@@ -44,19 +44,19 @@ const portSetLayout = ({ label, nodes, edges }: Input) => {
   };
 
   const makeEdge = (
-    edge: Edge,
+    edge: Edge
   ): { from: number; to: number; label: GraphEdge } => {
     return {
       from: parseInt(edge.v),
       to: parseInt(edge.w),
-      label: graph.edge(edge) as GraphEdge,
+      label: graph.edge(edge) as GraphEdge
     };
   };
 
   app.ports.getLayout.send({
     label: { width: 0, height: 0 }, // TODO: Use real output from dagre
     nodes: graph.nodes().map(makeNode),
-    edges: graph.edges().map(makeEdge),
+    edges: graph.edges().map(makeEdge)
   });
 };
 
