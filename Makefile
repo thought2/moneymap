@@ -9,14 +9,12 @@ build:
 	npx parcel build $(ENTRY)
 
 # Hot reloading development
-hot:
+dev:
 	npx parcel $(ENTRY) &
 
 # Serve module docs
 docs:
 	npx -c 'cd elm; elm-doc-preview --no-browser'
-
-dev: hot docs
 
 # Run the test suite
 test:
