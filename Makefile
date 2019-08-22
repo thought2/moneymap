@@ -14,7 +14,7 @@ hot:
 
 # Serve module docs
 docs:
-	npx -c 'cd elm; elm-doc-preview'
+	npx -c 'cd elm; elm-doc-preview --no-browser'
 
 dev: hot docs
 
@@ -22,6 +22,10 @@ dev: hot docs
 test:
 	npx -c 'cd elm; elm-verify-examples'
 	npx -c 'cd elm; elm-test'
+
+# Run the test suite in watch mode
+test_watch:
+	npx watch 'make test' elm/src elm/tests/Tests
 
 # Generate typescript types from elm ports
 gen-ts:
@@ -31,3 +35,7 @@ format:
 	npx prettier --write 'elm/**/*.json'
 	npx prettier --write 'ts/**/*.+(json|ts)'
 	npx prettier --write 'html/**/*.html'
+
+clean:
+	rm -rf node_modules
+	rm -rf elm/elm-stuff

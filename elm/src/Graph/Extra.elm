@@ -1,6 +1,18 @@
 module Graph.Extra exposing (getEdge, getNode, zipWith)
 
-{-| This module extends the [elm-community/graph](https://package.elm-lang.org/packages/elm-community/graph/latest/)
+{-| This module extends the [elm-community/graph](https://package.elm-lang.org/packages/elm-community/graph/latest/) package
+
+It is meant to be imported like
+
+    import Graph as Graph
+    import Graph.Extra as Graph
+
+    -- and used like
+
+    Graph.getNode 0 Graph.empty --> Nothing
+
+@docs getEdge, getNode, zipWith
+
 -}
 
 import Graph exposing (Edge, Graph, Node, NodeId)
@@ -8,12 +20,7 @@ import IntDict
 import Maybe.Extra as Maybe
 
 
-
--- TODO: Add documentation of the purpose of this module
--- TODO: Add documentation for the functions
-
-
-{-| TODO
+{-| Get the edge label from given source and target `NodeId`'s if exsiting
 -}
 getEdge : { from : NodeId, to : NodeId } -> Graph n e -> Maybe e
 getEdge { from, to } graph =
@@ -21,7 +28,7 @@ getEdge { from, to } graph =
         |> Maybe.andThen (\{ outgoing } -> IntDict.get to outgoing)
 
 
-{-| TODO
+{-| Get the node label from a given `NodeId` if existing
 -}
 getNode : NodeId -> Graph n e -> Maybe n
 getNode id graph =
@@ -29,7 +36,32 @@ getNode id graph =
         |> Maybe.map (.node >> .label)
 
 
-{-| TODO
+{-| Combines two graphs into a new one if their node and edge structure matches exactly
+
+    import Graph exposing (Graph, Node, Edge)
+
+    graph1 : Graph String ()
+    graph1 =
+        Graph.fromNodesAndEdges
+          [ Node 0 "A", Node 1 "B" ]
+          [ Edge 0 1 () ]
+
+    graph2 : Graph String ()
+    graph2 =
+        Graph.fromNodesAndEdges
+          [ Node 0 "a", Node 1 "b" ]
+          []
+
+    graph3 : Graph String ()
+    graph3 = Graph.fromNodesAndEdges
+          [ Node 0 "AA", Node 1 "BB" ] [ Edge 0 1 () ]
+
+    zipWith (++) (\_ _ -> ()) graph1 graph1
+    --> Just graph3
+
+    zipWith (++) (\_ _ -> ()) graph1 graph2
+    --> Nothing
+
 -}
 zipWith :
     (n1 -> n2 -> n3)
