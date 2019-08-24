@@ -1,39 +1,75 @@
-ENTRY=html/index.html
+APP_ENTRY=html/index.html
+PATH := $(PATH):node_modules/.bin
+
+prettier := prettier $options --ignore-path .gitignore '**/*.+(json|ts|html)'
+elm-format := elm-format $options --elm-version=0.19 elm/src elm/tests
+
+
+# Production build
+build:
+	parcel build $(APP_ENTRY)
 
 # Install dependencies
 install:
 	npm install
 
-# Production build
-build:
-	npx parcel build $(ENTRY)
-
 # Hot reloading development
 dev:
-	npx parcel $(ENTRY) &
+	parcel $(APP_ENTRY)
 
 # Serve module docs
 docs:
-	npx -c 'cd elm; elm-doc-preview --no-browser'
+	cd elm; \
+	elm-doc-preview --no-browser;
+
+# Generate tests from documentation examples
+gen-example-tests:
+	cd elm; \
+	elm-verify-examples; \
+	elm-format --yes tests/VerifyExamples;
 
 # Run the test suite
 test:
-	npx -c 'cd elm; elm-verify-examples'
-	npx -c 'cd elm; elm-test'
+	cd elm; \
+	elm-test
 
 # Run the test suite in watch mode
-test_watch:
-	npx watch 'make test' elm/src elm/tests/Tests
+test-watch:
+	watch 'make test' elm/src elm/tests/Tests
 
 # Generate typescript types from elm ports
 gen-ts:
-	npx elm-typescript-interop
+	elm-typescript-interop
 
+# Format code
 format:
-	npx prettier --write 'elm/**/*.json'
-	npx prettier --write 'ts/**/*.+(json|ts)'
-	npx prettier --write 'html/**/*.html'
+	$(elm-format:$options=--yes)
+	$(prettier:$options=--write)
 
+# Checks if code is formatted correctly
+check-format:
+	$(elm-format:$options=--validate)
+	$(prettier:$options=--check)
+
+# Clean dependency directories
 clean:
 	rm -rf node_modules
 	rm -rf elm/elm-stuff
+
+# Generate Nix expressions for CI and deployment
+gen-nix: clean gen-example-tests
+        # Unfortunately this hack is needed
+	bash sh/node2nix.sh
+
+        # Unfortunately `elm2nix` is not yet distributed via NPM
+	cd elm; \
+	elm2nix convert > elm-srcs.nix; \
+	elm2nix snapshot > versions.dat; \
+	mv elm-srcs.nix versions.dat --target ../nix/elm2nix
+
+# Product build using Nix
+build-nix:
+	bash sh/nix-build.sh
+
+# Checks format and tests
+check: check-format test
