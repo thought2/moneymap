@@ -33,6 +33,14 @@ test:
 	cd elm; \
 	elm-test
 
+# Run the TypeScript test suite
+test-ts:
+	npx mocha ts/tests/* --require ts-node/register
+
+# Scrape data from `opensecrets.org`
+scrape:
+	npx ts-node ts/scr/Scraper/index.ts
+
 # Run the test suite in watch mode
 test-watch:
 	watch 'make test' elm/src elm/tests/Tests
