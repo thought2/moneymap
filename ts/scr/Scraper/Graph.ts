@@ -2,6 +2,7 @@ import * as Api from "./Api";
 import { Individual, Organisation } from "./Types";
 import * as _ from "lodash";
 import { allInSeq } from "../Promise";
+import * as Logging from "./Logging";
 
 // Types
 
@@ -32,7 +33,10 @@ export const toGraphData = (graph: Graph): GraphData => {
 export const getGraph = (size?: number): Promise<Graph> => {
   const graph = { nodes: new Map(), edges: [] };
 
-  return Api.getCycles()
+  return Promise.resolve()
+    .then(Logging.log(1, ">", "getCycles"))
+    .then(() => Api.getCycles())
+    .then(Logging.log(1, " ", "ok"))
     .then(cycles => (size ? _.take(cycles, size) : cycles))
     .then(cycles =>
       allInSeq(cycles.map(cycle => setOrganisations(graph, cycle, size)))
@@ -44,7 +48,10 @@ const setOrganisations = (
   cycle: number,
   size?: number
 ): Promise<Graph> => {
-  return Api.getOrganisations({ cycle })
+  return Promise.resolve()
+    .then(Logging.log(2, ">", `get organisations for cycle ${cycle}`))
+    .then(() => Api.getOrganisations({ cycle }))
+    .then(Logging.log(2, " ", "ok"))
     .then(orgs => (size ? _.take(orgs, size) : orgs))
     .then(orgs => {
       return allInSeq(
@@ -66,7 +73,16 @@ const setRecipients = (
   organisation: Organisation,
   size?: number
 ): Promise<Graph> => {
-  return Api.getRecipients({ id: organisation.id, cycle })
+  return Promise.resolve()
+    .then(
+      Logging.log(
+        3,
+        ">",
+        `get recipients for organisation id ${organisation.id}`
+      )
+    )
+    .then(() => Api.getRecipients({ id: organisation.id, cycle }))
+    .then(Logging.log(3, " ", "ok"))
     .then(recipients => (size ? _.take(recipients, size) : recipients))
     .then(recipients => {
       recipients.forEach(recipient => {

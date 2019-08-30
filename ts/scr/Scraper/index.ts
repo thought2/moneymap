@@ -19,4 +19,4 @@ const main = (): Promise<void> => {
   });
 };
 
-console.log(config);
+main();
