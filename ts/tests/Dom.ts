@@ -4,7 +4,7 @@ import * as assert from "assert";
 import { JSDOM } from "jsdom";
 import * as _ from "lodash";
 
-describe("parser.elements", () => {
+describe("Dom", () => {
   describe("parseSelect", () => {
     it("succeeds", () => {
       const html = `
@@ -23,6 +23,7 @@ describe("parser.elements", () => {
 
   describe("parseTable", () => {
     it("succeeds", () => {
+      // TODO: Add omitting `th` case
       const html = `
         <table id="id">
           <tr>

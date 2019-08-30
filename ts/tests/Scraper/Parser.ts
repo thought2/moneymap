@@ -1,10 +1,10 @@
-import * as parser from "../../../scr/scraper/parser";
+import * as parser from "../../scr/Scraper/Parser";
 
 import * as assert from "assert";
 import { JSDOM } from "jsdom";
 import * as url from "url";
 
-describe("parser", () => {
+describe("Scraper.Parser", () => {
   describe("parseCycles", () => {
     it("succeeds", () => {
       const html = `
@@ -63,9 +63,16 @@ describe("parser", () => {
 
   describe("parseRecipients", () => {
     it("succeeds", () => {
+      // TODO: Add president case
       const html = `
         <div id="profileLeftColumn">
+          <h2></h2>
           <table class="datadisplay">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
             <tr>
               <td>Senate</td>
               <td>
@@ -86,6 +93,11 @@ describe("parser", () => {
               </td>
               <td class="number">$21,600</td>
             </tr>
+            <tr>
+              <td colspan="3">
+                See all recipients
+              </td>
+            </tr>
           </table>
         </div>
       `;
@@ -98,7 +110,8 @@ describe("parser", () => {
             surname: "McCaskill",
             chamber: "Senate",
             party: "D",
-            state: "MO"
+            state: "MO",
+            id: "N00027694"
           },
           money: 30783
         },
@@ -108,7 +121,8 @@ describe("parser", () => {
             surname: "Donovan",
             chamber: "House",
             party: "R",
-            state: "NY"
+            state: "NY",
+            id: "N00036928"
           },
           money: 21600
         }
@@ -120,6 +134,7 @@ describe("parser", () => {
 
   describe("parseIdLink", () => {
     it("succeeds", () => {
+      // TODO: Add cid case
       const url_ = url.parse("summary.php?id=D000031992&amp;cycle=2018", true);
       const actual = parser.parseIdLink(url_);
       const expected = "D000031992";

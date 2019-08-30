@@ -1,16 +1,13 @@
 export const allInSeq: <T>(
-  promises: Array<Promise<T>>
-) => Promise<T> = promises => {
-  return promises.reduce((promise1, promise2) => promise1.then(_ => promise2));
+  promises: Array<() => Promise<T>>
+) => Promise<Array<T>> = promises => {
+  return promises.reduce(
+    (promise1, func) =>
+      promise1.then(accum => func().then(result => accum.concat(result))),
+    Promise.resolve([] as any)
+  );
 };
 
-type T<T1, T2> = (x: T1) => Promise<T2>;
+// Array.prototype.concat.bind(result)
 
-export const wrap: <T1, T2, T3, T4>(
-  before: T<T1, T2>,
-  after: T<T3, T4>
-) => (promise: T<T2, T3>) => T<T1, T4> = (before, after) => middle => x =>
-  Promise.resolve(x)
-    .then(before)
-    .then(middle)
-    .then(after);
+Promise.all;

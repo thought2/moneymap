@@ -35,11 +35,11 @@ test:
 
 # Run the TypeScript test suite
 test-ts:
-	npx mocha ts/tests/* --require ts-node/register
+	npx mocha 'ts/tests/**' --require ts-node/register
 
 # Scrape data from `opensecrets.org`
 scrape:
-	npx ts-node ts/scr/Scraper/index.ts
+	OUT_FILE=data/opensecrets.json npx ts-node ts/scr/Scraper/index.ts
 
 # Run the test suite in watch mode
 test-watch:

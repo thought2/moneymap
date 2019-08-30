@@ -39,8 +39,9 @@ export const getGraph = (size?: number): Promise<Graph> => {
     .then(Logging.log(1, " ", "ok"))
     .then(cycles => (size ? _.take(cycles, size) : cycles))
     .then(cycles =>
-      allInSeq(cycles.map(cycle => setOrganisations(graph, cycle, size)))
-    );
+      allInSeq(cycles.map(cycle => () => setOrganisations(graph, cycle, size)))
+    )
+    .then(() => graph);
 };
 
 const setOrganisations = (
@@ -61,10 +62,11 @@ const setOrganisations = (
             ...organisation
           });
 
-          return setRecipients(graph, cycle, organisation, size);
+          return () => setRecipients(graph, cycle, organisation, size);
         })
       );
-    });
+    })
+    .then(() => graph);
 };
 
 const setRecipients = (

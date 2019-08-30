@@ -1,5 +1,7 @@
 import * as _ from "lodash";
 
+// TODO: Refactor refinement to selector
+
 // Types
 
 type Select = Array<{ text: string }>;
@@ -32,9 +34,8 @@ export const parseSelect = (
 
 export const parseTable = (
   parentNode: ParentNode,
-  refinement: string = ""
+  selector: string = "table"
 ): Table => {
-  const selector = `table${refinement}`;
   const table = parentNode.querySelector(selector);
   if (!table) throw new Error(errors.NOT_FOUND(selector));
   const rows = _.toArray(table.querySelectorAll("tr"));

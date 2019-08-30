@@ -1,4 +1,3 @@
-import { wrap } from "../Promise";
 import * as _ from "lodash";
 
 export const log: <T>(

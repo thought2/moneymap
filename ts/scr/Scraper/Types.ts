@@ -4,7 +4,7 @@ export type Individual = {
   prename: string;
   surname: string;
   chamber: string;
-  state: string;
+  state?: string;
   party: string;
   id: string;
 };

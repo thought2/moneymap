@@ -50,7 +50,7 @@ export const getRecipients = ({
 }): Promise<Array<Recipient>> => {
   const requestOpt = {
     method: "get",
-    url: "https://www.opensecrets.org/orgs/summary.php",
+    url: "https://www.opensecrets.org/orgs/toprecips.php",
     qs: { id, cycle }
   };
 
