@@ -29,9 +29,20 @@ gen-example-tests:
 	elm-format --yes tests/VerifyExamples;
 
 # Run the test suite
-test:
-	cd elm; \
-	elm-test
+test: test-ts test-elm
+
+# Run the Elm test suite
+test-elm:
+	cd elm; elm-verify-examples
+	cd elm; elm-test
+
+# Run the TypeScript test suite
+test-ts:
+	npx mocha 'ts/tests/**' --require ts-node/register
+
+# Scrape data from `opensecrets.org`
+scrape:
+	OUT_PATH=data/opensecrets.json ts-node ts/scr/Scraper/index.ts
 
 # Run the test suite in watch mode
 test-watch:
