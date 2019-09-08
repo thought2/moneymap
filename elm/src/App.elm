@@ -6,8 +6,11 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 import MoneyGraph exposing (MoneyGraph)
 import MoneyGraph.Data exposing (MoneyGraphData)
+import Pages.Error
+import Pages.Idle
 import Pages.Loading
 import Pages.Main
+import RemoteData as RemoteData exposing (WebData)
 
 
 
@@ -15,13 +18,13 @@ import Pages.Main
 
 
 type alias Model =
-    { main : Maybe Pages.Main.Model
+    { main : WebData MoneyGraphData
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { main = Nothing }
+    ( { main = RemoteData.NotAsked }
     , Cmd.none
     )
 
@@ -46,12 +49,20 @@ update msg model =
 view : Model -> Document Msg
 view model =
     case model.main of
-        Nothing ->
+        RemoteData.NotAsked ->
+            Pages.Idle.viewDoc
+
+        RemoteData.Loading ->
             Pages.Loading.viewDoc
 
-        Just data ->
+        RemoteData.Failure e ->
+            -- TODO: Better error message
+            Pages.Error.viewDoc { msg = "some error" }
+
+        RemoteData.Success data ->
             Pages.Main.viewDoc
                 {}
+                (Pages.Main.init data)
 
 
 subscriptions _ =

@@ -4,7 +4,7 @@ import Collage exposing (..)
 import Collage.Events exposing (..)
 import Collage.Layout exposing (..)
 import Collage.Text as CollageText
-import Color exposing (..)
+import ColorPalette exposing (..)
 import CommonTypes exposing (Entity(..), Party(..), Politician, toEntityCommon)
 import Graph
 import Graph.WithLabel as GraphWithLabel

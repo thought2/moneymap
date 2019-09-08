@@ -1,4 +1,4 @@
-module Pages.Main exposing (Config, Model, viewDoc)
+module Pages.Main exposing (Config, Model, init, viewDoc)
 
 import Browser exposing (Document)
 import Html.Styled exposing (text)
@@ -18,13 +18,13 @@ type alias Config =
 
 
 init : MoneyGraphData -> Model
-init =
+init _ =
     Debug.todo ""
 
 
-viewDoc : Config -> Document msg
-viewDoc config =
+viewDoc : Config -> Model -> Document msg
+viewDoc config model =
     PageTemplate.viewDoc
         { subTitle = "Main"
-        , mainContent = text "main"
+        , mainContent = text ""
         }

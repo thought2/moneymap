@@ -16,7 +16,7 @@ install:
 
 # Hot reloading development
 dev:
-	parcel serve $(APP_ENTRY)
+	parcel $(APP_ENTRY)
 
 # Serve module docs
 docs:
