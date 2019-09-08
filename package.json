@@ -17,19 +17,16 @@
     "url": "https://github.com/reinvdwoerd/moneymap/issues"
   },
   "homepage": "https://github.com/reinvdwoerd/moneymap#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "@types/dagre": "^0.7.42",
-    "elm": "^0.19.0",
     "elm-hot": "^1.1.2",
     "elm-test": "^0.19.0-rev6",
-    "elm-typescript-interop": "0.0.15",
     "node-elm-compiler": "^5.0.4",
     "parcel": "^1.12.3",
     "prettier": "^1.18.2",
     "typescript": "^3.5.3",
-    "watch": "^1.0.2"
-  },
-  "dependencies": {
+    "watch": "^1.0.2",
     "@types/jsdom": "^12.2.4",
     "@types/lodash": "^4.14.137",
     "@types/mocha": "^5.2.7",
