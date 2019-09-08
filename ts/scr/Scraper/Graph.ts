@@ -38,6 +38,7 @@ export const getGraph = (size?: number): Promise<Graph> => {
     .then(() => Api.getCycles())
     .then(Logging.log(1, " ", "ok"))
     .then(cycles => (size ? _.take(cycles, size) : cycles))
+    .then(cycles => cycles.filter(cycle => cycle > 2010)) // TODO: Before 2010, organisations are not linked
     .then(cycles =>
       allInSeq(cycles.map(cycle => () => setOrganisations(graph, cycle, size)))
     )
