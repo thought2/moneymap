@@ -8,6 +8,7 @@ elm-format := elm-format $options --elm-version=0.19 elm/src elm/tests
 # Production build
 build:
 	parcel build $(APP_ENTRY)
+	cp -r data -t dist
 
 # Install dependencies
 install:
