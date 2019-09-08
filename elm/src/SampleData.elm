@@ -14,6 +14,7 @@ import MoneyGraph.Data exposing (MoneyGraphData)
 
 -- TODO: Get rid of sample data and use real data
 
+
 {-| Some sample data that will be fetched from [opensecrets.org](www.opensecrets.org)
 -}
 sampleData : MoneyGraphData

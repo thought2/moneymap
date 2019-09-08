@@ -3,3 +3,7 @@ node_modules/
 dist/
 .idea/
 elm/tests/VerifyExamples
+.cache/
+dist/
+result
+.elm/
