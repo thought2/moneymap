@@ -1,4 +1,4 @@
-module App.Types exposing (Model, Msg(..))
+module GraphExplorer.Types exposing (Model, Msg(..))
 
 import Dagre.Output
 import Graph

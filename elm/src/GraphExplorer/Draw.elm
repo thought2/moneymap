@@ -1,6 +1,5 @@
-module App.Draw exposing (draw)
+module GraphExplorer.Draw exposing (draw)
 
-import App.Types exposing (Model, Msg(..))
 import Collage exposing (..)
 import Collage.Events exposing (..)
 import Collage.Layout exposing (..)
@@ -9,6 +8,7 @@ import Color exposing (..)
 import CommonTypes exposing (Entity(..), Party(..), Politician, toEntityCommon)
 import Graph
 import Graph.WithLabel as GraphWithLabel
+import GraphExplorer.Types exposing (Model, Msg(..))
 import MoneyGraph
 import Vector2d
 

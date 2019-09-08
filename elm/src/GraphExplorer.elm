@@ -1,7 +1,7 @@
-module App exposing (init, subscriptions, update)
+module GraphExplorer exposing (init, subscriptions, update)
 
-import App.Types exposing (Model, Msg(..))
 import Dagre
+import GraphExplorer.Types exposing (Model, Msg(..))
 import MoneyGraph exposing (MoneyGraph)
 import SampleData exposing (sampleData)
 

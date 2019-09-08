@@ -1,11 +1,11 @@
-module App.View exposing (view)
+module GraphExplorer.View exposing (view)
 
 -- VIEW
 
-import App.Draw exposing (draw)
-import App.Types exposing (Model, Msg)
 import Browser
 import Collage.Render as CollageRender
+import GraphExplorer.Draw exposing (draw)
+import GraphExplorer.Types exposing (Model, Msg)
 
 
 view : Model -> Browser.Document Msg

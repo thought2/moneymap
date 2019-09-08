@@ -1,9 +1,9 @@
 module Main exposing (main)
 
-import App
-import App.Types exposing (Model, Msg)
-import App.View
 import Browser
+import GraphExplorer
+import GraphExplorer.Types exposing (Model, Msg)
+import GraphExplorer.View
 
 
 
@@ -13,8 +13,8 @@ import Browser
 main : Program () Model Msg
 main =
     Browser.document
-        { init = App.init
-        , view = App.View.view
-        , update = App.update
-        , subscriptions = App.subscriptions
+        { init = GraphExplorer.init
+        , view = GraphExplorer.View.view
+        , update = GraphExplorer.update
+        , subscriptions = GraphExplorer.subscriptions
         }
